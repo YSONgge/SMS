@@ -26,4 +26,6 @@
     <string name="register_pwd">Password</string>
     <string name="register">REGISTER</string>
     <string name="joke">checking is regarded as agree to our terms</string>
+    <string name="http_fail">There is a problem with the current network</string>
+    <string name="account_exist">Account already exists</string>
 </resources>

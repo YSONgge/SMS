@@ -12,7 +12,7 @@ import entity.User;
 
 /**
  * @author yeye
- *
+ * 
  */
 public class IUserDaoImpl implements IUserDao {
 
@@ -61,6 +61,29 @@ public class IUserDaoImpl implements IUserDao {
 		return flag;
 	}
 
+	@Override
+	public boolean checkAccountExist(User u) {
+		Connection conn = new ConnectionMysql().getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean flag = false;
+		String sql = "select * from t_user_account where account=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, u.getAccount());
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				flag = true;
+			}
+		} catch (Exception e) {
+			LogUtil.e(e);
+		} finally {
+			close(conn, pstmt, rs);
+		}
+		return flag;
+
+	}
+
 	private void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
 		try {
 			if (rs != null) {
@@ -76,4 +99,5 @@ public class IUserDaoImpl implements IUserDao {
 			LogUtil.e(e);
 		}
 	}
+
 }

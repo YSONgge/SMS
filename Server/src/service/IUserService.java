@@ -10,4 +10,6 @@ public interface IUserService {
 	public boolean userRegisterAccount(User u);
 
 	public boolean userLogin(User u);
+	
+	public boolean checkAccountExist(User u);
 }
