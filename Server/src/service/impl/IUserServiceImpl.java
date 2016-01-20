@@ -28,5 +28,9 @@ public class IUserServiceImpl implements IUserService {
 	public boolean checkAccountExist(User u) {
 		return dao.checkAccountExist(u);
 	}
+	@Override
+	public User selectUserId(String account) {
+		return dao.selectUserId(account);
+	}
 
 }

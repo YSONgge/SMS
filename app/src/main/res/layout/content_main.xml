@@ -13,8 +13,21 @@
     tools:showIn="@layout/app_bar_main"
     tools:context=".MainActivity">
 
-    <TextView
-        android:text="Hello World!"
+
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="联系人备份"
+        android:id="@+id/btn_contacts_backup"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="54dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="短信备份"
+        android:id="@+id/btn_sms_backup"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

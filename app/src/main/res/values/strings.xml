@@ -28,4 +28,8 @@
     <string name="joke">checking is regarded as agree to our terms</string>
     <string name="http_fail">There is a problem with the current network</string>
     <string name="account_exist">Account already exists</string>
+    <string name="exit_user">退出账号</string>
+    <string name="account_manager">账户管理</string>
+    <string name="contacts_backup">联系人备份</string>
+    <string name="SMS_backup">短信备份</string>
 </resources>

@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSON;
 
 import dao.impl.IUserDaoImpl;
 import entity.User;
+import entity.UserInfoMsg;
 import factory.Factory;
 
 public class Login extends HttpServlet {
@@ -56,13 +57,18 @@ public class Login extends HttpServlet {
 
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String username = request.getParameter("account");
+		String account = request.getParameter("account");
 		String password = request.getParameter("password");
 		request.setCharacterEncoding("utf-8");
-		User u = new User(username, password);
-		// IUserDaoImpl i = new IUserDaoImpl();
+		User u = new User(account, password);
 		boolean result = Factory.getIUserService().userLogin(u);
-		String json = JSON.toJSONString(result);
+		User u1 = Factory.getIUserService().selectUserId(account);
+		UserInfoMsg msg = new UserInfoMsg();
+		msg.setResult(result);
+		if (result == true) {
+			msg.setUser(u1);
+		}
+		String json = JSON.toJSONString(msg);
 		out.println(json);
 		if (result) {
 			log("login success " + result);

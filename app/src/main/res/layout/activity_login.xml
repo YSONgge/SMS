@@ -56,11 +56,11 @@
                     android:hint="@string/prompt_password"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
+                    android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"/>
-
+                <!-- android:imeOptions="actionUnspecified" 设置为actionDone，软键盘的回车键就可以使用-->
             </android.support.design.widget.TextInputLayout>
 
             <Button

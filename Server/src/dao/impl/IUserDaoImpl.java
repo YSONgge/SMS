@@ -84,6 +84,29 @@ public class IUserDaoImpl implements IUserDao {
 
 	}
 
+	@Override
+	public User selectUserId(String account) {
+		Connection conn = new ConnectionMysql().getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		User u = null;
+		String sql = "select user_id from t_user_account where account=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, account);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				int userId = rs.getInt(1);
+				u = new User(userId);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, ps, rs);
+		}
+		return u;
+	}
+
 	private void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
 		try {
 			if (rs != null) {

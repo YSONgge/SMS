@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by yeye on 2016/1/16.
  */
-public class MySQLiteOpeanHelper extends SQLiteOpenHelper {
-    public MySQLiteOpeanHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+public class MySQLiteOpenHelper extends SQLiteOpenHelper {
+    public MySQLiteOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 

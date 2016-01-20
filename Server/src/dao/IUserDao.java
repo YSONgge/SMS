@@ -9,5 +9,7 @@ public interface IUserDao {
 	public boolean userLogin(User u);
 	
 	public boolean checkAccountExist(User u);
+	
+	public User selectUserId(String account);
 
 }
