@@ -32,4 +32,5 @@
     <string name="account_manager">账户管理</string>
     <string name="contacts_backup">联系人备份</string>
     <string name="SMS_backup">短信备份</string>
+    <string name="one_backup">一键备份</string>
 </resources>
