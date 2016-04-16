@@ -12,7 +12,7 @@ import com.example.yeye.sms.myMethod.Backup;
 
 public class SMSActivity extends AppCompatActivity {
 
-    public Button btnSMSBackUp, btnSMSRegeneration, btnSMSContent;
+    public Button btnSMSBackUp, btnSMSRegeneration, btnSMSContentList;
 
     public int userId;
 
@@ -23,10 +23,12 @@ public class SMSActivity extends AppCompatActivity {
         userId = getIntent().getIntExtra("userId", -1);
         btnSMSBackUp = (Button) findViewById(R.id.btn_sms_backUp);
         btnSMSRegeneration = (Button) findViewById(R.id.btn_sms_regeneration);
-        btnSMSContent = (Button) findViewById(R.id.btn_sms_content);
+        btnSMSContentList = (Button) findViewById(R.id.btn_sms_content_list);
 
         OnClickListener listener = new OnClickListener();
         btnSMSBackUp.setOnClickListener(listener);
+        btnSMSContentList.setOnClickListener(listener);
+        btnSMSRegeneration.setOnClickListener(listener);
     }
     public class OnClickListener implements View.OnClickListener{
 
@@ -36,7 +38,8 @@ public class SMSActivity extends AppCompatActivity {
                 case R.id.btn_sms_backUp:
                     Backup.doSMSBackup(SMSActivity.this,userId);
                     break;
-                case R.id.btn_sms_content:
+                case R.id.btn_sms_content_list:
+                    SMSListActivity.actionStart(SMSActivity.this);
                     break;
                 case R.id.btn_sms_regeneration:
                     break;

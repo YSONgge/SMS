@@ -3,23 +3,24 @@ package com.example.yeye.sms.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
-import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -30,11 +31,29 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.alibaba.fastjson.JSON;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.yeye.sms.ActivityCollector.ActivityCollector;
+import com.example.yeye.sms.R;
+import com.example.yeye.sms.entity.UserInfoMsg;
+import com.example.yeye.sms.sqlite.MySQLiteOpenHelper;
+import com.example.yeye.sms.util.HttpCallBackListener;
+import com.example.yeye.sms.util.HttpUtil;
+import com.example.yeye.sms.util.IConst;
+import com.example.yeye.sms.util.LogUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import com.example.yeye.sms.R;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -52,13 +71,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
+   /* private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
-    };
+    };*/
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+
+    private final String TAG = "LoginActivity";
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -66,10 +87,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    private MySQLiteOpenHelper helper;
+    private SQLiteDatabase db;
+    SharedPreferences preferences;
+    private String dbName = "user";
+    private int version = 1;
+    int userId;
+    public RequestQueue mQueue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ActivityCollector.addActivity(LoginActivity.this);
+        mQueue = Volley.newRequestQueue(LoginActivity.this);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.account);
         populateAutoComplete();
@@ -78,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {//editorInfo.ime_null-软键盘回车
                     attemptLogin();
                     return true;
                 }
@@ -94,8 +126,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        Button registerButton = (Button) findViewById(R.id.register_button);
+        registerButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterActivity.actionStart(LoginActivity.this);
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        helper = new MySQLiteOpenHelper(LoginActivity.this, dbName, null, version);
+        db = helper.getWritableDatabase();
     }
 
     private void populateAutoComplete() {
@@ -195,13 +238,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 2;
     }
 
     /**
@@ -311,21 +352,62 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
+            String url = IConst.SERVLET_ADDR + "Login";
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                // TODO: 2016/1/20 登陆成功后跳转
+                @Override
+                public void onResponse(String s) {
+                    UserInfoMsg UserInfo = JSON.parseObject(s, UserInfoMsg.class);
+                    if (UserInfo.isResult()) {
+                        userId = UserInfo.getUser().getUserId();
+                        System.out.println("userId = " + userId);
+                        SaveData(mEmail);
+                        saveSharedPreferencesUserId(userId);
+                        MainActivity.actionStart(LoginActivity.this, userId);
+                        ActivityCollector.removeActivity(LoginActivity.this);
+                        finish();
+                    }else{
+                        mPasswordView.setError(getString(R.string.error_incorrect_password));
+                        mPasswordView.requestFocus();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyError.printStackTrace();
+                    LogUtil.e(TAG, volleyError.toString());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(LoginActivity.this, R.string.http_fail, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("account", mEmail);
+                    map.put("password", mPassword);
+                    return map;
+                }
+            };
+            mQueue.add(stringRequest);
+           /* try {
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 return false;
-            }
+            }*/
 
+           /*
+            //官方测试代码
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
-            }
+            }*/
 
             // TODO: register the new account here.
             return true;
@@ -336,12 +418,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
+            /*if (success) {
+                MainActivity.actionStart(LoginActivity.this, userId);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
-            }
+            }*/
         }
 
         @Override
@@ -350,6 +433,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
+    /**
+     * 保存数据
+     */
+    public void SaveData(String account) {
+            String sql = "insert into user values(?,?)";
+            db.execSQL(sql, new Object[]{account, mPasswordView.getText()});
+
+    }
+
+    private void saveSharedPreferencesUserId(int userId) {
+        preferences = getSharedPreferences("userId"
+                , MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("userId", userId);
+        // 提交修改
+        /*
+         *apply()与commit()区别：  apply没有返回值而commit返回boolean表明修改是否提交成功 ，
+         * apply是将修改数据原子提交到内存, 而后异步真正提交到硬件磁盘, 而commit是同步的提交到硬件磁盘
+         * apply方法不会提示任何失败的提示。
+         */
+        editor.apply();
+        //editor.commit();
+    }
+
     public static void actionStart(Context context) {
         Intent i = new Intent(context, LoginActivity.class);
         context.startActivity(i);

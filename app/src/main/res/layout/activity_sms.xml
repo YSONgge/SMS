@@ -37,11 +37,11 @@
         android:text="恢复短信"/>
 
     <Button
-        android:id="@+id/btn_sms_content"
+        android:id="@+id/btn_sms_content_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_sms_regeneration"
         android:layout_centerHorizontal="true"
-        android:text="云短信"/>
+        android:text="短信列表"/>
 
 </RelativeLayout>
