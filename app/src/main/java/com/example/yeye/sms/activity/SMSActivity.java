@@ -9,12 +9,15 @@ import android.widget.Button;
 
 import com.example.yeye.sms.R;
 import com.example.yeye.sms.myMethod.Backup;
+import com.example.yeye.sms.myMethod.Regeneration;
+import com.example.yeye.sms.myMethod.Upload;
 
 public class SMSActivity extends AppCompatActivity {
 
     public Button btnSMSBackUp, btnSMSRegeneration, btnSMSContentList;
 
     public int userId;
+    public boolean loadFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,15 @@ public class SMSActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.btn_sms_backUp:
-                    Backup.doSMSBackup(SMSActivity.this,userId);
+                    loadFlag = Backup.doSMSBackup(SMSActivity.this,userId);
+                    Upload.SMSUpload(SMSActivity.this,loadFlag);
                     break;
                 case R.id.btn_sms_content_list:
                     SMSListActivity.actionStart(SMSActivity.this);
                     break;
                 case R.id.btn_sms_regeneration:
+                    Regeneration regeneration = new Regeneration();
+                    regeneration.doSMSRegeneration(SMSActivity.this,userId);
                     break;
             }
         }

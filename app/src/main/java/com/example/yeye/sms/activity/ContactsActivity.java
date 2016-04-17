@@ -10,11 +10,14 @@ import android.widget.Button;
 import com.example.yeye.sms.R;
 import com.example.yeye.sms.myMethod.Backup;
 import com.example.yeye.sms.myMethod.ShowContactsList;
+import com.example.yeye.sms.myMethod.Upload;
 
 public class ContactsActivity extends AppCompatActivity {
 
     public int userId;
-    public Button btnConBackUp,btnConRegeneration,btnConContentList;
+    public boolean loadFlag;
+    public Button btnConBackUp, btnConRegeneration, btnConContentList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,19 +28,20 @@ public class ContactsActivity extends AppCompatActivity {
         btnConRegeneration = (Button) findViewById(R.id.btn_contacts_regeneration);
         btnConContentList = (Button) findViewById(R.id.btn_contacts_content_list);
 
-       OnClickListener listener = new OnClickListener();
+        OnClickListener listener = new OnClickListener();
         btnConBackUp.setOnClickListener(listener);
         btnConRegeneration.setOnClickListener(listener);
         btnConContentList.setOnClickListener(listener);
     }
 
-    public class OnClickListener implements View.OnClickListener{
+    public class OnClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.btn_contacts_backup:
-                    Backup.doContactsBackup(ContactsActivity.this, userId);
+                    loadFlag = Backup.doContactsBackup(ContactsActivity.this, userId);
+                    Upload.ConUpload(ContactsActivity.this, loadFlag);
                     break;
                 case R.id.btn_contacts_content_list:
                     ContactsListActivity.actionStart(ContactsActivity.this);
@@ -48,7 +52,7 @@ public class ContactsActivity extends AppCompatActivity {
         }
     }
 
-    public static void actionStart(Context context,int userId) {
+    public static void actionStart(Context context, int userId) {
         Intent i = new Intent(context, ContactsActivity.class);
         i.putExtra("UserId", userId);
         context.startActivity(i);
