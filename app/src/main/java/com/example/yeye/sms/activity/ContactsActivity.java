@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.yeye.sms.R;
 import com.example.yeye.sms.myMethod.Backup;
+import com.example.yeye.sms.myMethod.Regeneration;
 import com.example.yeye.sms.myMethod.ShowContactsList;
 import com.example.yeye.sms.myMethod.Upload;
 
@@ -47,6 +48,8 @@ public class ContactsActivity extends AppCompatActivity {
                     ContactsListActivity.actionStart(ContactsActivity.this);
                     break;
                 case R.id.btn_contacts_regeneration:
+                    Regeneration regeneration = new Regeneration();
+                    regeneration.doContactsRegeneration(ContactsActivity.this,userId);
                     break;
             }
         }
