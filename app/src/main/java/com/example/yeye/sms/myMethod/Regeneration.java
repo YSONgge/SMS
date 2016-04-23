@@ -146,13 +146,7 @@ public class Regeneration {
             Looper.loop();
             e.printStackTrace();
 
-        }/* catch (IOException e) {
-            // TODO Auto-generated catch block
-            Looper.prepare();
-            Toast.makeText(activity, "短信恢复出错", 1).show();
-            Looper.loop();
-            e.printStackTrace();
-        }*/
+        }
         return smsItems;
     }
 

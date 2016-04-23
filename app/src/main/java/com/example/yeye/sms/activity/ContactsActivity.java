@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.yeye.sms.R;
 import com.example.yeye.sms.myMethod.Backup;
+import com.example.yeye.sms.myMethod.Download;
 import com.example.yeye.sms.myMethod.Regeneration;
 import com.example.yeye.sms.myMethod.ShowContactsList;
 import com.example.yeye.sms.myMethod.Upload;
@@ -44,7 +45,7 @@ public class ContactsActivity extends AppCompatActivity {
     }
 
     public class OnClickListener implements View.OnClickListener {
-        final ProgressDialog progressDialog = new ProgressDialog(ContactsActivity.this);
+       // final ProgressDialog progressDialog = new ProgressDialog(ContactsActivity.this);
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -53,26 +54,29 @@ public class ContactsActivity extends AppCompatActivity {
                      progressDialog
                      */
 
-                    progressDialog.setMessage("Loading...");
+                   /* progressDialog.setMessage("Loading...");
                     progressDialog.setCancelable(false);
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.show();
+                    progressDialog.setTitle("开始备份，请耐心等待...");*/
 
                     loadFlag = Backup.doContactsBackup(ContactsActivity.this, userId);
-                    Upload.ConUpload(ContactsActivity.this, loadFlag);
-                    progressDialog.dismiss();
+                    new Upload().Upload(ContactsActivity.this, loadFlag, userId + "_CONTACTS.xml");
+                  //  progressDialog.dismiss();
                     break;
                 case R.id.btn_contacts_content_list:
                     ContactsListActivity.actionStart(ContactsActivity.this);
                     break;
                 case R.id.btn_contacts_regeneration:
-                    progressDialog.setMessage("Loading...");
+                   /* progressDialog.setMessage("Loading...");
                     progressDialog.setCancelable(false);
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.show();
+                    progressDialog.setTitle("备份文件时间较长，请耐心等待...");*/
+                    new Download().DownloadFlie(ContactsActivity.this, userId + "_CONTACTS.xml");
                     Regeneration regeneration = new Regeneration();
                     regeneration.doContactsRegeneration(ContactsActivity.this, userId);
-                    progressDialog.dismiss();
+                    //progressDialog.dismiss();
                     break;
                         }
                     }

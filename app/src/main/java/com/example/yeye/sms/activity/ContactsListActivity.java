@@ -20,7 +20,7 @@ public class ContactsListActivity extends AppCompatActivity {
         TextView tv = new TextView(this);
         ScrollView sv = new ScrollView(this);
 
-        if (ShowSMSList.getSmsInPhone(this).equals("")) {
+        if (ShowContactsList.getNumberInPhone(this).equals("")) {
             setContentView(R.layout.activity_contacts_list);
         } else {
             tv.setText(ShowContactsList.getNumberInPhone(this));

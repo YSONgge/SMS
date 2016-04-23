@@ -27,5 +27,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
     compile 'com.squareup.okio:okio:1.6.0'
     compile 'com.alibaba:fastjson:1.2.7'
+    compile 'com.zhy:okhttputils:2.3.9'
     compile project(':volley')
 }

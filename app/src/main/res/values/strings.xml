@@ -26,6 +26,7 @@
     <string name="register_pwd">Password</string>
     <string name="register">REGISTER</string>
     <string name="joke">checking is regarded as agree to our terms</string>
+    <string name="joke2">checking is agree our terms</string>
     <string name="http_fail">There is a problem with the current network</string>
     <string name="account_exist">Account already exists</string>
     <string name="exit_user">退出账号</string>
@@ -35,4 +36,9 @@
     <string name="one_backup">一键备份</string>
     <string name="uploadFail">上传失败</string>
     <string name="network_is_bad">网络错误！</string>
+    <string name="local_contacts">通讯录</string>
+    <string name="resume_contact">恢复通讯录</string>
+
+    <drawable name="clr_normal">#585cde</drawable>
+    <drawable name="clr_pressed">#580eee</drawable>
 </resources>

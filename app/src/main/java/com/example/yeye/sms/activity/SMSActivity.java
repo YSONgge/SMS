@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.yeye.sms.R;
 import com.example.yeye.sms.myMethod.Backup;
+import com.example.yeye.sms.myMethod.Download;
 import com.example.yeye.sms.myMethod.Regeneration;
 import com.example.yeye.sms.myMethod.Upload;
 
@@ -40,12 +41,13 @@ public class SMSActivity extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.btn_sms_backUp:
                     loadFlag = Backup.doSMSBackup(SMSActivity.this,userId);
-                    Upload.SMSUpload(SMSActivity.this,loadFlag,"sms");
+                    new Upload().Upload(SMSActivity.this,loadFlag,userId + "_SMS.xml");
                     break;
                 case R.id.btn_sms_content_list:
                     SMSListActivity.actionStart(SMSActivity.this);
                     break;
                 case R.id.btn_sms_regeneration:
+                    new Download().DownloadFlie(SMSActivity.this,userId + "_SMS.xml");
                     Regeneration regeneration = new Regeneration();
                     regeneration.doSMSRegeneration(SMSActivity.this,userId);
                     break;
