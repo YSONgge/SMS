@@ -110,33 +110,6 @@ public class RegisterActivity extends AppCompatActivity {
                 };
                 mQueue.add(stringRequest);
             }
-            /*new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(pwd)) {
-                        String url = IConst.SERVLET_ADDR + "Register";
-                         String json = "{account:"+account+"";
-                       *//* Map<String, String> map = new HashMap<String, String>();
-                        map.put("account", account);
-                        map.put("password", pwd);
-
-                        String json = JSON.toJSONString(map, true);*//*
-                        LogUtil.e(TAG, json);
-                        try {
-                            String response = OkHttpPostUtil.post(url, json);
-                            if (response.equals("true")) {
-                                LoginActivity.actionStart(RegisterActivity.this);
-                                Toast.makeText(RegisterActivity.this, "Register success", Toast.LENGTH_LONG).show();
-
-                            }
-                        } catch (IOException e) {
-                            LogUtil.e(TAG, e.toString());
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-            }).start();*/
 
         }
     }

@@ -2,8 +2,14 @@ package com.example.yeye.sms.util;
 
 import android.text.TextUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yeye on 2016/1/16.
@@ -26,5 +32,23 @@ public class Utility {
             LogUtil.e(TAG, e.toString());
         }
         return flag;
+    }
+
+    public static synchronized boolean handleUploadRequestResponse(String response){
+        String TAG = "handleUploadSmsRequestResponse";
+        Boolean uploadSmsflag = false;
+        if (TextUtils.isEmpty(response)) {
+            return uploadSmsflag;
+        }
+        try {
+            LogUtil.d(TAG, response);
+            JSONObject jsonObject = new JSONObject(response);
+            uploadSmsflag = jsonObject.getBoolean("result");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            LogUtil.e(TAG, e.toString());
+        }
+        return uploadSmsflag;
     }
 }

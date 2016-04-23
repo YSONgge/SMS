@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
@@ -13,7 +12,6 @@ import android.provider.ContactsContract;
 import android.util.Xml;
 import android.widget.Toast;
 
-import com.example.yeye.sms.util.ContactsField;
 import com.example.yeye.sms.util.ContactsItem;
 import com.example.yeye.sms.util.LogUtil;
 import com.example.yeye.sms.util.SmsField;
@@ -170,11 +168,10 @@ public class Regeneration {
         LogUtil.d("sqk", "after ContactsItem");
         for (ContactsItem item : conItems) {
 
-            // 判断短信数据库中是否已包含该条短信，如果有，则不需要恢复
             Cursor cursor = conResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER}, ContactsContract.CommonDataKinds.Phone.NUMBER + "=?",
                     new String[]{item.getNumber()}, null);
 
-            if (!cursor.moveToFirst()) {// 没有该条短信
+            if (!cursor.moveToFirst()) {
 
                 ContentValues values = new ContentValues();
                 long contactId = ContentUris.parseId(conResolver.insert(Uri.parse("content://com.android.contacts/raw_contacts"), values));
@@ -194,10 +191,6 @@ public class Regeneration {
                 values.put("data1", item.getNumber());
                 conResolver.insert(uri, values);
 
-/*                // 如果是空字符串说明原来的值是null，所以这里还原为null存入数据库
-                values.put(ContactsField.DISPLAY_NAME, item.getDisplayName().equals("") ? null : item.getDisplayName());
-                values.put(ContactsField.NUMBER, item.getNumber().equals("") ? null : item.getNumber());
-                conResolver.insert(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, values);*/
             }
             cursor.close();
         }
@@ -254,27 +247,14 @@ public class Regeneration {
                     e.printStackTrace();
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | XmlPullParserException e) {
 
             Looper.prepare();
             Toast.makeText(activity, "联系人恢复出错", Toast.LENGTH_LONG).show();
             Looper.loop();
             e.printStackTrace();
 
-        } catch (XmlPullParserException e) {
-            // TODO Auto-generated catch block
-            Looper.prepare();
-            Toast.makeText(activity, "联系人恢复出错", Toast.LENGTH_LONG).show();
-            Looper.loop();
-            e.printStackTrace();
-
-        }/* catch (IOException e) {
-            // TODO Auto-generated catch block
-            Looper.prepare();
-            Toast.makeText(activity, "短信恢复出错", 1).show();
-            Looper.loop();
-            e.printStackTrace();
-        }*/
+        }
         return conItems;
     }
 }

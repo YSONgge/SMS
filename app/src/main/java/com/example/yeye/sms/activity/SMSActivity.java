@@ -40,7 +40,7 @@ public class SMSActivity extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.btn_sms_backUp:
                     loadFlag = Backup.doSMSBackup(SMSActivity.this,userId);
-                    Upload.SMSUpload(SMSActivity.this,loadFlag);
+                    Upload.SMSUpload(SMSActivity.this,loadFlag,"sms");
                     break;
                 case R.id.btn_sms_content_list:
                     SMSListActivity.actionStart(SMSActivity.this);

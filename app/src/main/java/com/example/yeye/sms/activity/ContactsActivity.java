@@ -1,17 +1,25 @@
 package com.example.yeye.sms.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.yeye.sms.R;
 import com.example.yeye.sms.myMethod.Backup;
 import com.example.yeye.sms.myMethod.Regeneration;
 import com.example.yeye.sms.myMethod.ShowContactsList;
 import com.example.yeye.sms.myMethod.Upload;
+import com.example.yeye.sms.util.HttpUtil;
+import com.example.yeye.sms.util.IConst;
+import com.example.yeye.sms.util.Utility;
+
+import java.util.List;
+import java.util.Map;
 
 public class ContactsActivity extends AppCompatActivity {
 
@@ -36,28 +44,43 @@ public class ContactsActivity extends AppCompatActivity {
     }
 
     public class OnClickListener implements View.OnClickListener {
-
+        final ProgressDialog progressDialog = new ProgressDialog(ContactsActivity.this);
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_contacts_backup:
+                    /*
+                     progressDialog
+                     */
+
+                    progressDialog.setMessage("Loading...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.show();
+
                     loadFlag = Backup.doContactsBackup(ContactsActivity.this, userId);
                     Upload.ConUpload(ContactsActivity.this, loadFlag);
+                    progressDialog.dismiss();
                     break;
                 case R.id.btn_contacts_content_list:
                     ContactsListActivity.actionStart(ContactsActivity.this);
                     break;
                 case R.id.btn_contacts_regeneration:
+                    progressDialog.setMessage("Loading...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.show();
                     Regeneration regeneration = new Regeneration();
-                    regeneration.doContactsRegeneration(ContactsActivity.this,userId);
+                    regeneration.doContactsRegeneration(ContactsActivity.this, userId);
+                    progressDialog.dismiss();
                     break;
+                        }
+                    }
             }
+
+        public static void actionStart(Context context, int userId) {
+            Intent i = new Intent(context, ContactsActivity.class);
+            i.putExtra("UserId", userId);
+            context.startActivity(i);
         }
     }
-
-    public static void actionStart(Context context, int userId) {
-        Intent i = new Intent(context, ContactsActivity.class);
-        i.putExtra("UserId", userId);
-        context.startActivity(i);
-    }
-}

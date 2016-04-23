@@ -33,4 +33,6 @@
     <string name="contacts_backup">联系人备份</string>
     <string name="SMS_backup">短信备份</string>
     <string name="one_backup">一键备份</string>
+    <string name="uploadFail">上传失败</string>
+    <string name="network_is_bad">网络错误！</string>
 </resources>
