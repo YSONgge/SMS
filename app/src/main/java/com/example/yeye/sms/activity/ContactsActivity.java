@@ -68,14 +68,27 @@ public class ContactsActivity extends AppCompatActivity {
                     ContactsListActivity.actionStart(ContactsActivity.this);
                     break;
                 case R.id.btn_contacts_regeneration:
-                   /* progressDialog.setMessage("Loading...");
+                  /*  progressDialog.setMessage("Loading...");
                     progressDialog.setCancelable(false);
+                    progressDialog.setTitle("备份文件时间较长，请耐心等待...");
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.show();
-                    progressDialog.setTitle("备份文件时间较长，请耐心等待...");*/
-                    new Download().DownloadFlie(ContactsActivity.this, userId + "_CONTACTS.xml");
-                    Regeneration regeneration = new Regeneration();
-                    regeneration.doContactsRegeneration(ContactsActivity.this, userId);
+                    progressDialog.show();*/
+
+                    new Download().DownloadFlie(ContactsActivity.this, userId + "_CONTACTS");
+                   // Regeneration regeneration = new Regeneration();
+                    //regeneration.doContactsRegeneration(ContactsActivity.this, userId);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    new Regeneration().doContactsRegeneration(ContactsActivity.this,userId);
+                   // progressDialog.show();
                     //progressDialog.dismiss();
                     break;
                         }

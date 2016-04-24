@@ -2,8 +2,6 @@ package com.example.yeye.sms.myMethod;
 
 import android.app.Activity;
 import android.os.Environment;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.yeye.sms.util.IConst;
@@ -28,12 +26,16 @@ public class Download {
     }
     public void DownloadFile(final Activity activity,String type)
     {
-        String url = IConst.SERVLET_ADDR + "FileServlet";
+        String Servlet = "DownloadServlet";
+
+        String userIdType =type;
+
+        String url = IConst.SERVLET_ADDR + Servlet + "?userIdType="+ userIdType ;
         OkHttpUtils
                 .get()
                 .url(url)
                 .build()
-                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.SMS", type)//
+                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.SMS", type + ".xml")//
                 {
 
                     @Override
@@ -55,7 +57,7 @@ public class Download {
                     @Override
                     public void onResponse(File file) {
                         Toast.makeText(activity, "文件下载完成，准备备份中...", Toast.LENGTH_LONG).show();
-                        LogUtil.e(TAG, "onResponse :" + file.getAbsolutePath());
+                        LogUtil.d(TAG, "onResponse :" + file.getAbsolutePath());
                     }
                 });
     }

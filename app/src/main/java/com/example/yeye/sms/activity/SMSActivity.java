@@ -47,9 +47,10 @@ public class SMSActivity extends AppCompatActivity {
                     SMSListActivity.actionStart(SMSActivity.this);
                     break;
                 case R.id.btn_sms_regeneration:
-                    new Download().DownloadFlie(SMSActivity.this,userId + "_SMS.xml");
+                    new Download().DownloadFlie(SMSActivity.this,userId + "_SMS");
                     Regeneration regeneration = new Regeneration();
-                    regeneration.doSMSRegeneration(SMSActivity.this,userId);
+                    regeneration.doSMSRegeneration(SMSActivity.this, userId);
+
                     break;
             }
         }

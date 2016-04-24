@@ -68,7 +68,10 @@ public class Regeneration {
                 conResolver.insert(Uri.parse("content://sms"), values);
             }
             cursor.close();
+
         }
+        LogUtil.d("短信已经备份完了","真的");
+        activity.setTitle("SMS");
     }
 
     public List<SmsItem> getSmsItemsFromXml(Activity activity, int userId) {
@@ -81,9 +84,9 @@ public class Regeneration {
         File file = new File(absolutePath);
         if (!file.exists()) {
 
-            Looper.prepare();
+//            Looper.prepare();
             Toast.makeText(activity, "message.xml短信备份文件不在sd卡中", Toast.LENGTH_LONG).show();
-            Looper.loop();//退出线程
+ //           Looper.loop();//退出线程
 //			return null;
         }
         try {
@@ -122,6 +125,7 @@ public class Regeneration {
                     case XmlPullParser.END_TAG:// 结束标记,如</smsItems>,</smsItem>等
                         if ("item".equals(parser.getName())) {
                             smsItems.add(smsItem);
+                           LogUtil.d("从xml文件里拿数据", smsItems.toString());
                             smsItem = null;
                         }
                         break;
@@ -134,16 +138,16 @@ public class Regeneration {
             }
         } catch (FileNotFoundException e) {
 
-            Looper.prepare();
+          //  Looper.prepare();
             Toast.makeText(activity, "短信恢复出错", Toast.LENGTH_LONG).show();
-            Looper.loop();
+          //  Looper.loop();
             e.printStackTrace();
 
         } catch (XmlPullParserException e) {
             // TODO Auto-generated catch block
-            Looper.prepare();
+          //  Looper.prepare();
             Toast.makeText(activity, "短信恢复出错", Toast.LENGTH_LONG).show();
-            Looper.loop();
+          //  Looper.loop();
             e.printStackTrace();
 
         }
@@ -187,6 +191,7 @@ public class Regeneration {
 
             }
             cursor.close();
+            LogUtil.d("联系人备份完了","yes");
         }
     }
     public List<ContactsItem> getConItemsFromXml(Activity activity, int userId) {
@@ -200,9 +205,9 @@ public class Regeneration {
         File file = new File(absolutePath);
         if (!file.exists()) {
 
-            Looper.prepare();
+           // Looper.prepare();
             Toast.makeText(activity, "联系人备份文件不在sd卡中", Toast.LENGTH_LONG).show();
-            Looper.loop();//退出线程
+           // Looper.loop();//退出线程
 //			return null;
         }
         try {
@@ -231,6 +236,7 @@ public class Regeneration {
                     case XmlPullParser.END_TAG:// 结束标记,如</smsItems>,</smsItem>等
                         if ("item".equals(parser.getName())) {
                             conItems.add(conItem);
+                            LogUtil.d("从文件里取联系人","正在取");
                             conItem = null;
                         }
                         break;
@@ -243,9 +249,9 @@ public class Regeneration {
             }
         } catch (FileNotFoundException | XmlPullParserException e) {
 
-            Looper.prepare();
+//            Looper.prepare();
             Toast.makeText(activity, "联系人恢复出错", Toast.LENGTH_LONG).show();
-            Looper.loop();
+       //     Looper.loop();
             e.printStackTrace();
 
         }

@@ -71,14 +71,15 @@ public class Upload  {
     }
     public void postFile(Activity activity,String type)
     {
-
+        String Servlet = "UploadServlet";
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.example.SMS", type);
         if (!file.exists())
         {
             Toast.makeText(activity, "备份文件路径不存在，请重新备份", Toast.LENGTH_SHORT).show();
             return;
         }
-        String url = IConst.SERVLET_ADDR + "FileServlet";
+
+        String url = IConst.SERVLET_ADDR + Servlet;
         OkHttpUtils
                 .postFile()
                 .url(url)
