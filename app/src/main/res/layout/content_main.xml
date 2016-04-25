@@ -6,71 +6,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back_ground_color"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="1"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
-    tools:showIn="@layout/app_bar_main"
-    android:orientation="vertical">
+    tools:showIn="@layout/app_bar_main">
 
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </FrameLayout>
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="355dp"
-        android:layout_height="200dp"
-        android:src="@drawable/iconmail"/>
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginBottom="2pt"
+        android:src="@drawable/rang1"/>
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        >
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="125dp">
 
             <Button
-                android:id="@+id/btn_contacts_backup"
+                android:id="@+id/btn_main_contacts_backup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="54dp"
-                android:text="联系人备份"/>
+                android:layout_margin="2pt"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:text="通讯录备份"
+                android:textColor="#ffffff"
+                android:textSize="15sp"/>
 
             <Button
-                android:id="@+id/btn_sms_backup"
+                android:id="@+id/btn_main_sms_backup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="短信备份"/>
-        </TableRow>
+                android:layout_margin="2pt"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:text="短信备份"
+                android:textColor="#ffffff"
+                android:textSize="15sp"/>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="125dp">
 
             <Button
+                android:id="@+id/btn_main_contacts_content_list"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button"
-                android:layout_column="0"/>
+                android:layout_height="match_parent"
+                android:layout_column="0"
+                android:layout_margin="2pt"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:text="@string/local_contacts"
+                android:textColor="#ffffff"
+                android:textSize="15sp"/>
 
             <Button
+                android:id="@+id/btn_main_sms_content_list"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button2"
-                android:layout_column="1"/>
-        </TableRow>
+                android:layout_height="match_parent"
+                android:layout_column="1"
+                android:layout_margin="2pt"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:text="本地短信"
+                android:textColor="#ffffff"
+                android:textSize="15sp"/>
+        </LinearLayout>
 
     </TableLayout>
 

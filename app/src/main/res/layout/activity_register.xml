@@ -80,20 +80,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.04">
 
-        <Button
-            android:id="@+id/register_button"
-            android:layout_width="200dp"
-            android:layout_height="65dp"
-            android:layout_gravity="center"
-            android:text="@string/register"
-            android:background="#585cde"
-            android:textColor="#fefcfc"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
         <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="20dp"
+            android:layout_marginTop="3pt"
             android:layout_gravity="center_horizontal|bottom">
 
             <CheckBox
@@ -109,6 +99,20 @@
                 android:text="@string/joke2"
                 android:layout_gravity="center_horizontal|center"/>
         </GridLayout>
+
+        <Button
+            android:id="@+id/register_button"
+            android:layout_gravity="center_horizontal|top"
+            android:text="@string/register"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="8pt"
+            android:layout_marginRight="8pt"
+            android:background="#585cde"
+            android:textColor="#fefcfc"
+            android:textStyle="bold"/>
 
     </FrameLayout>
 

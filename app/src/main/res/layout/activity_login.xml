@@ -8,7 +8,7 @@
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context="com.example.yeye.sms.activity.LoginActivity"
+              tools:context="com.example.yeye.Easy_Backup.activity.LoginActivity"
               android:background="@drawable/background"
               android:weightSum="1">
 
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="WECOME TO SIGN IN"
+            android:text="Welcome To Sign In"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="25sp"/>
     </FrameLayout>
