@@ -164,12 +164,8 @@ public class MainActivity extends AppCompatActivity
         return account ;
     }
 
-    public static void actionStart(Context context) {
-        Intent i = new Intent(context, LoginActivity.class);
-        context.startActivity(i);
-    }
     public static void actionStart(Context context,int userId) {
-        Intent i = new Intent(context, LoginActivity.class);
+        Intent i = new Intent(context, MainActivity.class);
         i.putExtra("UserId",userId);
         context.startActivity(i);
     }

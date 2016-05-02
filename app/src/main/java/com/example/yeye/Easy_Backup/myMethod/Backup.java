@@ -145,7 +145,8 @@ public class Backup {
                         serializer.attribute(null, SmsField.SEEN, seen);
                         // 结束标记
                         serializer.endTag(null, "item");
-
+                        System.out.println(address);
+                        System.out.println(person);
                     } while (cursor.moveToNext());
                     serializer.endTag(null, "sms");
                     serializer.endDocument();

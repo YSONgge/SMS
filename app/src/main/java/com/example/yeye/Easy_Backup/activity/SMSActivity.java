@@ -25,6 +25,7 @@ public class SMSActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms);
         userId = getIntent().getIntExtra("userId", -1);
+        SMSActivity.this.setTitle("短信备份");
         btnSMSBackUp = (Button) findViewById(R.id.btn_sms_backUp);
         btnSMSRegeneration = (Button) findViewById(R.id.btn_sms_regeneration);
         btnSMSContentList = (Button) findViewById(R.id.btn_sms_content_list);

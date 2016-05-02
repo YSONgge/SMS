@@ -110,7 +110,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginLeft="8pt"
             android:layout_marginRight="8pt"
-            android:background="#585cde"
+            android:background="@drawable/button_selector"
             android:textColor="#fefcfc"
             android:textStyle="bold"/>
 

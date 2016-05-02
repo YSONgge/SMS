@@ -89,13 +89,15 @@ public class RegisterActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-/*                                UserInfoMsg userInfo = JSON.parseObject(response, UserInfoMsg.class);
-                                if (userInfo.isResult()) {
-                                   LoginActivity.actionStart(RegisterActivity.this);
-                                }*/
+
                                 if (response.equals("true")) {
                                     LoginActivity.actionStart(RegisterActivity.this);
-
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(RegisterActivity.this,"Regester success,return to Login",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                     finish();
                                 }
                             }

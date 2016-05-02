@@ -37,7 +37,7 @@ public class Upload  {
         public void onBefore(Request request)
         {
             super.onBefore(request);
-
+            System.out.println(request);
         }
 
         @Override
@@ -78,6 +78,7 @@ public class Upload  {
                 .postFile()
                 .url(url)
                 .file(file)
+                .addHeader("type",type)
                 .build()
                 .execute(new MyStringCallback());
 

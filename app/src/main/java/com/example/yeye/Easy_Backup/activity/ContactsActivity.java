@@ -25,6 +25,7 @@ public class ContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contacts);
         userId = getIntent().getIntExtra("userId", -1);
 
+        ContactsActivity.this.setTitle("通讯录备份");
         btnConBackUp = (Button) findViewById(R.id.btn_contacts_backup);
         btnConRegeneration = (Button) findViewById(R.id.btn_contacts_regeneration);
         btnConContentList = (Button) findViewById(R.id.btn_contacts_content_list);
