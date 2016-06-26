@@ -279,7 +279,7 @@ public class Backup {
 
         if (!cursor.moveToFirst()) {
             LogUtil.e("联系人条数", "手机中没有联系人");
-            Toast.makeText(activity, "没有短信可备份", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "没有联系人可备份", Toast.LENGTH_LONG).show();
         } else {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 /**

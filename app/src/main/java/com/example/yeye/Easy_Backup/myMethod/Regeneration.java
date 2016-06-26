@@ -69,8 +69,9 @@ public class Regeneration {
             cursor.close();
 
         }
-        LogUtil.d("短信已经备份完了","真的");
-        activity.setTitle("SMS");
+        LogUtil.d("短信已恢复份完了", "真的");
+       // activity.setTitle("SMS");
+        //Toast.makeText(activity, "短信恢复完成。", Toast.LENGTH_LONG).show();
     }
 
     public List<SmsItem> getSmsItemsFromXml(Activity activity, int userId) {
@@ -83,10 +84,8 @@ public class Regeneration {
         File file = new File(absolutePath);
         if (!file.exists()) {
 
-//            Looper.prepare();
             Toast.makeText(activity, "message.xml短信备份文件不在sd卡中", Toast.LENGTH_LONG).show();
- //           Looper.loop();//退出线程
-//			return null;
+
         }
         try {
             FileInputStream fis = null;
@@ -173,8 +172,8 @@ public class Regeneration {
                 ContentValues values = new ContentValues();
                 long contactId = ContentUris.parseId(conResolver.insert(Uri.parse("content://com.android.contacts/raw_contacts"), values));
 
-                // 添加姓名
                 Uri uri = Uri.parse("content://com.android.contacts/data");
+                // 添加姓名
                 values.put("raw_contact_id", contactId);
                 values.put("mimetype", "vnd.android.cursor.item/name");
                 values.put("data2",  item.getDisplayName());

@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity
         ActivityCollector.addActivity(this);
         // TODO: 2016/1/20 userId 尚未设置
         userId=getIntent().getIntExtra("UserId",-1);
+        Log.i("login userid",userId+"");
 
         helper = new MySQLiteOpenHelper(MainActivity.this, dbName, null, version);
         db = helper.getWritableDatabase();

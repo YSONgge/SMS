@@ -1,7 +1,9 @@
 package servlet;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
@@ -28,10 +30,10 @@ public class UploadServlet extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 
-		super.init();
+		super.init(config);
 		// 读取配置文件，获取初始化参数
 		smsFilePath = "SmsFile";
-		contactsFilePath = "ContactsFlie";
+		contactsFilePath = "ContactsFile";
 		tempPath = "Temp";
 
 		ServletContext context = getServletContext();
@@ -81,40 +83,43 @@ public class UploadServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("text/plain;charset=UTF-8");
-		
-		File sms = new File(smsFilePath+"/");
-		
-		PrintWriter out = response.getWriter();
-		try{
+
+		PrintWriter pw = response.getWriter();
+		String status = null;
+		try {
 			DiskFileItemFactory diskFactory = new DiskFileItemFactory();
-			diskFactory.setSizeThreshold(4*1024);
+			diskFactory.setSizeThreshold(4 * 1024);
 			diskFactory.setRepository(new File(tempPath));
-			
+
 			ServletFileUpload upload = new ServletFileUpload(diskFactory);
-			upload.setSizeMax(4*1024*1024);
+			upload.setSizeMax(4 * 1024 * 1024);
 			List fileItems = upload.parseRequest(request);
 			Iterator iter = fileItems.iterator();
 			File up = null;
-			while (iter.hasNext()){
+			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
 				if (item.isFormField()) {
 					System.out.println("处理表单内容 ...");
-					processFormField(item, out);
+					processFormField(item, pw);
 				} else {
 					System.out.println("处理上传的文件 ...");
-					up = processUploadFile(item, out);
+					up = processUploadFile(item, pw);
 				}
 			}
-			
-		}catch (Exception e) {
+			status = "OK";
+
+		} catch (Exception e) {
 			System.out.println("使用 fileupload 包时发生异常 ...");
 			e.printStackTrace();
+			status = "ERROR";
 		}
 		JSONObject json = new JSONObject();
-		json.put("result", "OK");
-		
-		out.print(json);
-		out.close();
+
+		json.put("result", status);
+		System.out.println(status);
+
+		pw.print(json);
+		pw.close();
 	}
 
 	private String processFormField(FileItem item, PrintWriter out) {
@@ -124,13 +129,13 @@ public class UploadServlet extends HttpServlet {
 	}
 
 	// 处理上传的文件
-		private File processUploadFile(FileItem item, PrintWriter pw)
-				throws Exception {
+	private File processUploadFile(FileItem item, PrintWriter pw)
+			throws Exception {
 		// 此时的文件名包含了完整的路径，得注意加工一下
 		String filename = item.getName();
 		System.out.println("完整的文件名：" + filename);
-		int index = filename.lastIndexOf("\\");
-		filename = filename.substring(index + 1, filename.length());
+		//int index = filename.lastIndexOf("\\");
+		//filename = filename.substring(index + 1, filename.length());
 
 		long fileSize = item.getSize();
 
@@ -138,9 +143,30 @@ public class UploadServlet extends HttpServlet {
 			System.out.println("文件名为空 ...");
 			return null;
 		}
+		String[] filesTemp = filename.split("_");
+		String fileTemp = filesTemp[1];
+		//InputStream is = item.getInputStream();
+		//File uploadFile;
+		if ("SMS.xml".equalsIgnoreCase(fileTemp)) {
+			File SMSuploadFile = new File(smsFilePath + "/" + filename);
+			item.write(SMSuploadFile);
+			return SMSuploadFile;
+			//uploadFile = SMSuploadFile;
+		} else {
+			File CONuploadFile = new File(contactsFilePath + "/" + filename);
+			item.write(CONuploadFile);
+			return CONuploadFile;
+			//uploadFile = CONuploadFile;
+		}
 		
-		File uploadFile = new File(contactsFilePath + "/" + filename);
-		item.write(uploadFile);
-		return uploadFile;
+		//item.write(uploadFile);
+	/*	FileOutputStream fos = new FileOutputStream(uploadFile);
+		int hasRead = 0;
+		byte[] buf = new byte[1024];
+		while ((hasRead = is.read(buf)) > 0) {
+			fos.write(buf, 0, hasRead);
+		}*/
+		//return uploadFile;
 	}
+
 }

@@ -47,8 +47,10 @@ public class DownloadServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		ServletContext cntx = getServletContext();
+		OutputStream out = response.getOutputStream();
 		
 		String userIdType = request.getParameter("userIdType");
+		System.out.println(userIdType);
 		String[] userId_Type =userIdType.split("_");
 		int userId = Integer.parseInt(userId_Type[0]);
 		String type = userId_Type[1];
@@ -61,19 +63,19 @@ public class DownloadServlet extends HttpServlet {
 			fileName = cntx.getRealPath("ContactsFile/"+userIdType+".xml");
 		}
 		File f = new File(fileName);
+
 		String mime = cntx.getMimeType(fileName);
 		response.setContentType(mime);
 		response.setContentLength((int) f.length());
 		
-		FileInputStream fin = new FileInputStream(f);
-		OutputStream out = response.getOutputStream();
+		FileInputStream fin = new FileInputStream(f);	
 		
 		byte[] buf = new byte[1024];
 		int count = 0 ;
 		while((count = fin .read(buf))>=0){
 			out.write(buf, 0, count);
 		}
-		System.out.println("test");
+		System.out.println("test"+userId);
 		out.flush();
 		fin.close();
 	}

@@ -28,7 +28,7 @@ public class Download {
     {
         String Servlet = "DownloadServlet";
 
-        String userIdType =type;
+        final String userIdType =type;
 
         String url = IConst.SERVLET_ADDR + Servlet + "?userIdType="+ userIdType ;
         OkHttpUtils
@@ -57,6 +57,12 @@ public class Download {
                     @Override
                     public void onResponse(File file) {
                         Toast.makeText(activity, "文件下载完成，准备备份中...", Toast.LENGTH_LONG).show();
+                        if (userIdType.contains("SMS")){
+                            Toast.makeText(activity,"短信恢复活动结束",Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(activity,"联系人恢复活动结束",Toast.LENGTH_LONG).show();
+                        }
+
                         LogUtil.d(TAG, "onResponse :" + file.getAbsolutePath());
                     }
                 });
