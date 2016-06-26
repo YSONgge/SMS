@@ -1,34 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.yeye.sms" >
+<manifest
+    package="com.example.yeye.Easy_Backup"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
+
+
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/rang1"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.example.yeye.Easy_Backup.activity.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login" >
-        </activity>
-        <activity android:name=".activity.RegisterActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name="com.example.yeye.Easy_Backup.activity.LoginActivity"
+            android:label="@string/app_name"
 
-                <category android:name="android.intent.category.LAUNCHER" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.yeye.Easy_Backup.activity.RegisterActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.example.yeye.Easy_Backup.activity.SMSActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.example.yeye.Easy_Backup.activity.ContactsActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name="com.example.yeye.Easy_Backup.activity.SMSListActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.example.yeye.Easy_Backup.activity.ContactsListActivity"
+            android:screenOrientation="portrait">
+
         </activity>
     </application>
 

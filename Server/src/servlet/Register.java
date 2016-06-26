@@ -59,11 +59,12 @@ public class Register extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
+		log(account);
+		log(password);
 		User u = new User(account, password);
 		boolean result = Factory.getIUserService().userRegisterAccount(u);
 		String json = JSON.toJSONString(result);
 		out.print(json);
-		out.println(json);
 		if (result) {
 			log("register success " + result);
 		} else {

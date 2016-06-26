@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_ground_color"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="1"
+    tools:context="com.example.yeye.Easy_Backup.activity.ContactsActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </FrameLayout>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_weight="0.15"
+            android:src="@drawable/cloud"/>
+
+
+
+    <Button
+        android:id="@+id/btn_contacts_backup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="2pt"
+        android:layout_weight="0.27"
+        android:background="@drawable/button_selector"
+        android:text="@string/one_backup"
+        android:textColor="#ffffff"
+        android:textSize="25sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.60"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_contacts_content_list"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="2pt"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:text="@string/local_contacts"
+            android:textSize="20dp"
+            android:textColor="#ffffff"/>
+
+        <Button
+            android:id="@+id/btn_contacts_regeneration"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="2pt"
+            android:layout_marginBottom="70dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:text="@string/resume_contact"
+            android:textSize="20dp"
+            android:textColor="#ffffff"/>
+
+    </LinearLayout>
+
+</LinearLayout>

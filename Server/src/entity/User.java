@@ -28,6 +28,11 @@ public class User {
 		this.account = account;
 		this.password = password;
 	}
+	
+	public User(int userId) {
+		super();
+		this.userId = userId;
+	}
 
 	public int getUserId() {
 		return userId;

@@ -17,6 +17,41 @@
     <servlet-name>Register</servlet-name>
     <servlet-class>servlet.Register</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>CheckAccountExist</servlet-name>
+    <servlet-class>servlet.CheckAccountExist</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>ContactsFileServlet</servlet-name>
+    <servlet-class>servlet.ContactsFileServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>SmsFileServlet</servlet-name>
+    <servlet-class>servlet.SmsFileServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>servlet.UploadServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>servlet.DownloadServlet</servlet-class>
+  </servlet>
+
+
+
+
+
 
 
   <servlet-mapping>
@@ -26,6 +61,26 @@
   <servlet-mapping>
     <servlet-name>Register</servlet-name>
     <url-pattern>/Register</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CheckAccountExist</servlet-name>
+    <url-pattern>/CheckAccountExist</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ContactsFileServlet</servlet-name>
+    <url-pattern>/ContactsFileServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SmsFileServlet</servlet-name>
+    <url-pattern>/SmsFileServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/UploadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DownloadServlet</servlet-name>
+    <url-pattern>/DownloadServlet</url-pattern>
   </servlet-mapping>
 
 	
